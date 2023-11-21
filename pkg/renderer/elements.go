@@ -1,6 +1,7 @@
 package renderer
 
-type Tag uint64
+type Tag uint8
+type LayoutedElementType uint8
 
 const (
 	Div Tag = iota
@@ -8,13 +9,28 @@ const (
 	Img
 )
 
+const (
+	Rect LayoutedElementType = iota
+	Text
+	Image
+)
+
 type Element struct {
-	Tag         Tag
-	TextContent string
-	Style       ElementStyle
+	Tag   Tag
+	Style ElementStyle
 }
 
 type DivElement struct {
 	Children Element
+	Element
+}
+
+type LayoutedElement struct {
+	Type   LayoutedElementType
+	PosX   int32
+	PosY   int32
+	Width  int32
+	Height int32
+
 	Element
 }

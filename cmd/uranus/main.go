@@ -1,41 +1,33 @@
 package main
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"github.com/MasterTuto/Uranus/pkg/renderer"
+	"github.com/MasterTuto/Uranus/pkg/window"
+)
 
 func main() {
-	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
-		panic(err)
-	}
-	defer sdl.Quit()
+	window.Init()
+	defer window.Quit()
 
-	window, err := sdl.CreateWindow("test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
-		800, 600, sdl.WINDOW_SHOWN)
-	if err != nil {
-		panic(err)
-	}
-	defer window.Destroy()
+	context := window.Create()
+	defer context.Destroy()
 
-	surface, err := window.GetSurface()
-	if err != nil {
-		panic(err)
-	}
-	surface.FillRect(nil, 0)
+	renderContext := renderer.New(context.Window)
 
-	rect := sdl.Rect{0, 0, 200, 200}
-	colour := sdl.Color{R: 255, G: 0, B: 255, A: 255} // purple
-	pixel := sdl.MapRGBA(surface.Format, colour.R, colour.G, colour.B, colour.A)
-	surface.FillRect(&rect, pixel)
-	window.UpdateSurface()
-
-	running := true
-	for running {
-		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-			switch event.(type) {
-			case *sdl.QuitEvent:
-				println("Quit")
-				running = false
-				break
-			}
-		}
+	elements := make([]renderer.LayoutedElement, 1)
+	elements[0] = renderer.LayoutedElement{
+		Type:   renderer.Rect,
+		PosX:   0,
+		PosY:   0,
+		Height: 100,
+		Width:  100,
+		Element: renderer.Element{
+			Style: renderer.ElementStyle{
+				BackgroundColor: "#ff0000",
+			},
+		},
 	}
+	renderContext.Render(elements)
+
+	window.ListenToEvents()
 }
