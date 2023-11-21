@@ -7,6 +7,7 @@ const (
 	Div Tag = iota
 	Span
 	Img
+	TextNode
 )
 
 const (
@@ -16,13 +17,11 @@ const (
 )
 
 type Element struct {
-	Tag   Tag
-	Style ElementStyle
-}
-
-type DivElement struct {
-	Children Element
-	Element
+	Tag         Tag
+	TextContent string
+	Children    []*Element
+	Attr        map[string]string
+	Style       ElementStyle
 }
 
 type LayoutedElement struct {

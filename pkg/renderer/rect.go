@@ -5,10 +5,10 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func (renderer *Renderer) renderRect(element LayoutedElement) {
+func (renderer *Engine) renderRect(element LayoutedElement) {
 	surface := renderer.surface()
 
-	surface.FillRect(nil, 0)
+	surface.FillRect(nil, 255)
 
 	rect := sdl.Rect{
 		X: element.PosX,

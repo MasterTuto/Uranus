@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/MasterTuto/Uranus/pkg/renderer"
 	"github.com/MasterTuto/Uranus/pkg/window"
 )
@@ -12,18 +15,25 @@ func main() {
 	context := window.Create()
 	defer context.Destroy()
 
-	renderContext := renderer.New(context.Window)
+	renderContext, err := renderer.New(context.Window)
+	if err != nil {
+		fmt.Println("Error on initiating the renderer")
+		os.Exit(1)
+	}
 
 	elements := make([]renderer.LayoutedElement, 1)
 	elements[0] = renderer.LayoutedElement{
-		Type:   renderer.Rect,
+		Type:   renderer.Text,
 		PosX:   0,
 		PosY:   0,
 		Height: 100,
 		Width:  100,
 		Element: renderer.Element{
+			TextContent: "Hello, World",
 			Style: renderer.ElementStyle{
-				BackgroundColor: "#ff0000",
+				Color:      "#fff",
+				FontFamily: "font.ttf",
+				FontSize:   32,
 			},
 		},
 	}

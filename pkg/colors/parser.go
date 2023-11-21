@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"image/color"
 	"strings"
+
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 func Parse(theColor string) (c color.RGBA, e error) {
@@ -13,6 +15,19 @@ func Parse(theColor string) (c color.RGBA, e error) {
 
 	c.A = 0xFF
 	e = fmt.Errorf("Invalid color")
+	return
+}
+
+func ParseToSdl(color string) (c sdl.Color, e error) {
+	parsedC, e := Parse(color)
+
+	c = sdl.Color{
+		R: parsedC.R,
+		G: parsedC.G,
+		B: parsedC.B,
+		A: parsedC.A,
+	}
+
 	return
 }
 
