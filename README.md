@@ -157,12 +157,3 @@ go clean -cache
 ## License
 
 MIT License. See the `LICENSE` file for details.
-
----
-
-If you’d like, I can also generate:
-
-* A CSS implementation roadmap
-* A feature matrix comparing Uranus with HTML/CSS
-* Example gallery (buttons, cards, layouts)
-* A full specification document for the style and layout engine
